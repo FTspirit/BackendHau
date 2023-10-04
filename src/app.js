@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
 const routesV1 = require('./routes/v1');
-const routesV2 = require('./routes/v2');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 
 const ApiError = require('./helpers/ApiError');
@@ -17,8 +16,6 @@ const app = express();
 
 // CronJob;
 // require('../cronjob/zalo.renew.accesstoken');
-require('../cronjob/queryLicensePlate');
-require('../cronjob/sendPenaltyNotification');
 
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
@@ -42,12 +39,11 @@ app.use(xss());
 app.use(compression());
 
 // enable cors
-// app.use(cors());
-// app.options('*', cors());
+app.use(cors());
+app.options('*', cors());
 
 // v1 api routes
-app.use('/hook', routesV1);
-app.use('/hook/v2', routesV2);
+app.use('/', routesV1);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
