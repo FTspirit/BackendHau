@@ -155,7 +155,30 @@ const schedule = catchAsync(async (req, res) => {
       logger.error(`Error: ${error}`);
     });
 });
+
+const loginV2 = catchAsync(async (req, res) => {
+  const data = {
+    studentName: 'Phạm Đăng Phúc2020CN5',
+    studentCode: '2055010203',
+    learningGrading4: 'Khá',
+    learningGrading10: 'Khá',
+    Average: '3.04',
+    cumulativeAverage: '3.04 ',
+    accumulatedCredits: '99 / 99',
+    academicCredits: '108',
+    scoreData: {
+      extractedData: [
+        ['1', 'TC2611', 'Toán Đại số', '3', '1', 'QT : 7', '7', '7', '3', 'B', '', ''],
+        ['2', 'TC2701', 'Vật lý P1', '2', '1', 'QT : 7', '4.5', '5.3', '1', 'D', '', ''],
+        ['3', 'CT3901.1', 'Triết học Mác - LêNin', '3', '1', 'QT : 9', '5', '5.8', '2', 'C', '', ''],
+      ],
+    },
+  };
+  res.status(httpStatus.OK).send(data);
+});
+
 module.exports = {
   login,
   schedule,
+  loginV2,
 };

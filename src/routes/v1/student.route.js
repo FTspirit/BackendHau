@@ -8,6 +8,7 @@ const { studentController } = require('../../controllers');
 
 /* Car */
 router.post('/login', studentController.login);
+router.post('/loginV2', studentController.loginV2);
 router.post('/schedule', studentController.schedule);
 
 module.exports = router;
