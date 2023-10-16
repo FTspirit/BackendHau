@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-plusplus */
 /* eslint-disable camelcase */
 /* eslint-disable no-await-in-loop */
@@ -9,6 +11,7 @@ const httpStatus = require('http-status');
 const { parse } = require('node-html-parser');
 const catchAsync = require('../helpers/catchAsync');
 const logger = require('../config/logger');
+const ApiError = require('../helpers/ApiError');
 
 const login = catchAsync(async (req, res) => {
   const formData = new URLSearchParams();
@@ -19,6 +22,7 @@ const login = catchAsync(async (req, res) => {
 
   const axiosInstance = axios.create({
     baseURL: 'https://tinchi.hau.edu.vn/',
+    timeout: 3000,
   });
   axiosInstance
     .get('/')
@@ -88,14 +92,17 @@ const login = catchAsync(async (req, res) => {
             })
             .catch((error) => {
               logger.error(`Error: ${error}`);
+              return res.status(500).send('Internal Server Errror!');
             });
         })
         .catch((error) => {
           logger.error(`Error: ${error}`);
+          return res.status(500).send('Internal Server Errror!');
         });
     })
     .catch((error) => {
       logger.error(`Error: ${error}`);
+      return res.status(500).send('Internal Server Errror!');
     });
 });
 
@@ -158,7 +165,8 @@ const schedule = catchAsync(async (req, res) => {
 
 const loginV2 = catchAsync(async (req, res) => {
   const data = {
-    studentName: 'Phạm Đăng Phúc2020CN5',
+    studentName: 'Phạm Đăng Phúc',
+    studentClass: '20CN5',
     studentCode: '2055010203',
     learningGrading4: 'Khá',
     learningGrading10: 'Khá',
