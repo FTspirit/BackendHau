@@ -30,11 +30,11 @@ const sequelizeGofaProduct = new Sequelize(
 
 const db = {};
 
-fs.readdirSync(`${__dirname}/gofa/product`)
+fs.readdirSync(`${__dirname}/hau/product`)
   .filter((file) => file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js')
   .forEach((file) => {
     // eslint-disable-next-line global-require, security/detect-non-literal-require, import/no-dynamic-require
-    const model = require(path.join(`${__dirname}/gofa/product`, file))(sequelizeGofaProduct, Sequelize.DataTypes);
+    const model = require(path.join(`${__dirname}/hau/product`, file))(sequelizeGofaProduct, Sequelize.DataTypes);
     db[model.name] = model;
   });
 

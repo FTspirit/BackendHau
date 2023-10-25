@@ -13,6 +13,9 @@ const catchAsync = require('../helpers/catchAsync');
 const logger = require('../config/logger');
 const ApiError = require('../helpers/ApiError');
 
+// Import serivce
+const { userService, studentService } = require('../services/index');
+
 const login = catchAsync(async (req, res) => {
   const formData = new URLSearchParams();
   formData.append('Role', `${req.body.role}`);
@@ -185,8 +188,33 @@ const loginV2 = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send(data);
 });
 
+// API Login
+// Method: POOST
+// Example request
+// "role": 0,
+// "username": "2051010113",
+// "password": "205101011326112002"
+const loginV3 = catchAsync(async (req, res) => {
+  const { username, password } = req.body;
+  const checkUser = {
+    user_name: username,
+    password,
+  };
+  const result = await userService.checkUserAndPassword(checkUser);
+  if (!result) {
+    return res.status(500).send('Internal Server Errror!');
+  }
+  const studentCodeData = {
+    student_code: result.student_code,
+  };
+  const studentData = await studentService.getStudentByCodeService(studentCodeData);
+
+  res.status(httpStatus.OK).send(studentData);
+});
+
 module.exports = {
   login,
   schedule,
   loginV2,
+  loginV3,
 };

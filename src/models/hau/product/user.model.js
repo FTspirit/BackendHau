@@ -5,36 +5,33 @@
 const utils = require('../../../helpers/utils');
 
 module.exports = (sequelize, DataTypes) => {
-  const ZaloToken = sequelize.define(
-    'ZaloToken',
+  const user = sequelize.define(
+    'user',
     {
-      id: {
-        type: DataTypes.INTEGER,
+      student_code: {
+        type: DataTypes.TEXT,
         primaryKey: true,
       },
+      user_name: DataTypes.TEXT,
+      password: DataTypes.TEXT,
+      is_admin: DataTypes.BOOLEAN,
       created_at: DataTypes.INTEGER,
       updated_at: DataTypes.INTEGER,
-      access_token: DataTypes.STRING,
-      refresh_token: DataTypes.STRING,
-      access_token_expired: DataTypes.INTEGER,
-      refresh_token_expired: DataTypes.INTEGER,
-      access_token_expire_time: DataTypes.INTEGER,
-      refresh_token_expire_time: DataTypes.INTEGER,
     },
     {
-      tableName: 'zalo_token',
+      tableName: 'user',
     }
   );
-  ZaloToken.beforeCreate(async (record, options) => {
+  user.beforeCreate(async (record, options) => {
     record.created_at = utils.getCurrentTimeEpoch();
     record.updated_at = utils.getCurrentTimeEpoch();
   });
-  ZaloToken.beforeSave(async (record, options) => {
+  user.beforeSave(async (record, options) => {
     record.updated_at = utils.getCurrentTimeEpoch();
   });
-  ZaloToken.associate = function (models) {
+  user.associate = function (models) {
     // associations can be defined here
   };
 
-  return ZaloToken;
+  return user;
 };
