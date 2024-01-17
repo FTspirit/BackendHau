@@ -1,12 +1,27 @@
 const express = require('express');
-const studentRoute = require('./student.route');
+const userRoute = require('./user.route');
+const orderRoute = require('./order.route');
+const roleRoute = require('./role.route');
+const orderDetail = require('./order_detail.route');
 
 const router = express.Router();
 
 const defaultRoutes = [
   {
-    path: '/api',
-    route: studentRoute,
+    path: '/app',
+    route: userRoute,
+  },
+  {
+    path: '/app',
+    route: orderRoute,
+  },
+  {
+    path: '/app',
+    route: roleRoute,
+  },
+  {
+    path: '/app',
+    route: orderDetail,
   },
 ];
 
